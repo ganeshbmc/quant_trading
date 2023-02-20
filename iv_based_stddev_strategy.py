@@ -23,7 +23,7 @@ st.header('Input Parameters')
 
 
 underlying = st.text_input('Enter the name of the underlying')
-spot_prev_close = st.number_input('Enter spot price of interest', step=50)
+spot_prev_close = st.number_input('Enter spot price of interest', step=0.1)
 days_to_expiry = st.number_input('Enter the number of days to expiry', step=0.5)
 atm_iv = st.number_input('Enter the ATM IV value of the underlying',step=0.1)
     
