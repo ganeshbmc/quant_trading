@@ -63,14 +63,14 @@ def get_strikes(underlying, atm_iv, spot_prev_close, days_to_expiry):
                 f"{int(points_move)}", f"{int(lower_strike)}", f"{int(upper_strike)}"]
         df[f"{risk_stddev} SD"] = temp
 
-    statement = f"Underlying: {underlying.upper()}\nSpot price of interest: {spot_prev_close}\nPeriod of interest: {days_to_expiry}\nATM IV: {atm_iv}\n\n"
+    # statement = f"Underlying: {underlying.upper()}\nSpot price of interest: {spot_prev_close}\nPeriod of interest: {days_to_expiry}\nATM IV: {atm_iv}\n\n"
     # print(statement)
-    return (statement, df)
+    return df
 
-results = get_strikes(underlying, atm_iv, spot_prev_close, days_to_expiry)
+result = get_strikes(underlying, atm_iv, spot_prev_close, days_to_expiry)
 
 #Output
 
-st.subheader('Result of calculation is:')
-st.write(results[0])
-st.dataframe(results[1])
+st.subheader("Here's your output")
+# st.write()
+st.dataframe(result)
