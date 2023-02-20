@@ -1,7 +1,7 @@
 import streamlit as st
 
 st.write("""
-# Simple strategy based on ATM IV and std deviations
+# Calculate breakeven points based on ATM IV, time to expiry and std deviations!
 
 This app asks for the following details from you:
 
@@ -36,10 +36,37 @@ st.write(data)
 
 # App engine
 
-result = data['Number_of_days_to_expiry'] * data['ATM_IV']
+# result = data['Number_of_days_to_expiry'] * data['ATM_IV']
+
+def expected_move_pct(atm_iv, days_to_expiry, risk_stddev):
+    exp_move_pct = (atm_iv/(m.sqrt(256/days_to_expiry)))
+    exp_move_pct_for_desired_risk = exp_move_pct * risk_stddev
+    return exp_move_pct, exp_move_pct_for_desired_risk
+
+def get_strikes(underlying, atm_iv, spot_prev_close, days_to_expiry):
+
+    heads = ["Percentage move", "Points to move from spot", "Lower strike", "Upper strike"]
+    df = pd.DataFrame(index=heads)
+
+    std_devs = [0.75, 1, 1.25, 1.5, 1.75, 2, 2.5]
+    for risk_stddev in std_devs:
+        mv1, mv2 = expected_move_pct(atm_iv, days_to_expiry, risk_stddev)
+        points_move = spot_prev_close * (mv2/100)
+        lower_strike = spot_prev_close - points_move
+        upper_strike = spot_prev_close + points_move
+
+        temp = [f"{round(mv2, 2)}%", 
+                f"{int(points_move)}", f"{int(lower_strike)}", f"{int(upper_strike)}"]
+        df[f"{risk_stddev} SD"] = temp
+
+    statement = f"Underlying: {underlying.upper()}\nSpot price of interest: {spot_prev_close}\nPeriod of interest: {days_to_expiry}\nATM IV: {atm_iv}\n\n"
+    # print(statement)
+    return (statement, df)
+
+results = get_strikes(underlying, atm_iv, spot_prev_close, days_to_expiry)
 
 #Output
 
 st.subheader('Result of calculation is:')
-st.write(data['Underlying_name'])
-st.write(result)
+st.write(results[0])
+st.write(results[1])
