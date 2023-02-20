@@ -28,15 +28,16 @@ days_to_expiry = st.number_input('Enter the number of days to expiry')
 atm_iv = st.number_input('Enter the ATM IV value of the underlying')
     
 
-data = {'Underlying_name': underlying,
-        'Spot_price': spot_prev_close,
-        'Number_of_days_to_expiry': days_to_expiry,
-        'ATM_IV': atm_iv
-        }
+# data = {'Underlying_name': underlying,
+#         'Spot_price': spot_prev_close,
+#         'Number_of_days_to_expiry': days_to_expiry,
+#         'ATM_IV': atm_iv
+#         }
 
 
-st.subheader('User input parameters')
-st.write(data)
+# st.subheader('User input parameters')
+# st.write(data)
+
 
 # App engine
 
@@ -71,6 +72,6 @@ result = get_strikes(underlying, atm_iv, spot_prev_close, days_to_expiry)
 
 #Output
 
-st.subheader("Here's your output")
+st.subheader("Here's your Output!")
 # st.write()
 st.dataframe(result)
