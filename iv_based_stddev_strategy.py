@@ -1,4 +1,8 @@
 import streamlit as st
+import math as m
+import numpy as np
+import pandas as pd
+import datetime as dt
 
 st.write("""
 # Calculate breakeven points based on ATM IV, time to expiry and std deviations!
@@ -69,4 +73,4 @@ results = get_strikes(underlying, atm_iv, spot_prev_close, days_to_expiry)
 
 st.subheader('Result of calculation is:')
 st.write(results[0])
-st.write(results[1])
+st.dataframe(results[1])
